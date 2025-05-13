@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">MealMate</string>
 
+    <string name="emai">Entrez votre email</string>
+    <string name="password">Entrez votre mot de passe</string>
+    <string name="confirm_password">Confrimez le mot de passe</string>
+    <string name="society_info">© 2025 Mima\'a By KOBE - Tous droits réservés</string>
+
+
     <!-- Client ID -->
     <string name="client_id">937139751235-di6p6dh5pb8dhgsteoa7v5soi9c02utl.apps.googleusercontent.com</string>
 </resources>
