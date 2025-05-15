@@ -4,6 +4,7 @@ object Routes{
     const val AUTH_GRAPHROUTE = "auth_graph"
     const val HOME_GRAPHROUTE = "home_graph"
     const val SETTINGS_GRAPHROUTE = "settings_graph"
+    const val DASHBOARD_GRAPHROUTE = "dashboard_graph"
     const val PROFILE_GRAPHROUTE = "profile_graph"
     const val COMMUNITY_GRAPHROUTE = "community_graph"
 
@@ -22,6 +23,9 @@ object Routes{
         object TopicDetail : Screen("topic_detail/{topicId}"){
             fun setRoute(topicId : Int) = "topic_detail/$topicId"
         }
+
+        //route du graph dashboard
+        object DashboardScreen : Screen("dashboard_screen")
 
         //route du graph community
         object CommunityScreen : Screen("community_screen")

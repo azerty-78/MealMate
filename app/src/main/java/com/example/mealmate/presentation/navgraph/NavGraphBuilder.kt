@@ -1,4 +1,4 @@
-package com.example.mealmate.presentation.di
+package com.example.mealmate.presentation.navgraph
 
 import android.app.Activity.RESULT_OK
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -10,12 +10,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.mealmate.presentation.navgraph.Routes
 import com.example.mealmate.ui.view.authentification.ForgotPasswordScreen
 import com.example.mealmate.ui.view.authentification.SignUpScreen
 import com.example.mealmate.ui.view.authentification.SingInScreen
 import com.example.mealmate.ui.view.authentification.state.Auth_event
 import com.example.mealmate.ui.view.authentification.state.Auth_viewModel
+import com.example.mealmate.ui.view.dashboardScreen.DashboardScreen
 
 
 //authentification graph
@@ -87,5 +87,26 @@ fun NavGraphBuilder.authGraph(navController: NavController){
         composable(Routes.Screen.ForgotPasswordScreen.route){
             ForgotPasswordScreen(navController = navController)
         }
+    }
+}
+
+//dashboard graph
+fun NavGraphBuilder.dashboardGraph(navController: NavController){
+    navigation(
+        startDestination = Routes.Screen.DashboardScreen.route,
+        route = Routes.DASHBOARD_GRAPHROUTE
+    ){
+        composable(Routes.Screen.DashboardScreen.route){
+            val viewModel: Auth_viewModel = hiltViewModel()
+            LaunchedEffect(Unit) {
+                viewModel.getSignedUser()
+            }
+
+            DashboardScreen(
+                navController = navController,
+                currentUser = viewModel.uiState.value.currentUser,
+            )
+        }
+        //more...
     }
 }

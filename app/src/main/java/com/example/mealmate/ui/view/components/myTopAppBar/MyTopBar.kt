@@ -1,4 +1,4 @@
-package com.example.mealmate.ui.view.myTopAppBar
+package com.example.mealmate.ui.view.components.myTopAppBar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,9 +24,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.mealmate.ui.view.myTopAppBar.DimensionTopBar.ICON_BUTTON_SIZE
-import com.example.mealmate.ui.view.myTopAppBar.DimensionTopBar.ICON_SIZE
-import com.example.mealmate.ui.view.myTopAppBar.DimensionTopBar.PROFILE_PICTURE_SIZE
+import com.example.mealmate.ui.view.components.myTopAppBar.DimensionTopBar.ICON_BUTTON_SIZE
+import com.example.mealmate.ui.view.components.myTopAppBar.DimensionTopBar.ICON_SIZE
+import com.example.mealmate.ui.view.components.myTopAppBar.DimensionTopBar.PROFILE_PICTURE_SIZE
 
 import com.example.mealmate.R
 import com.example.mealmate.data.source.model.User
