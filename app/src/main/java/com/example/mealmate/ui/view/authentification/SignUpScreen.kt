@@ -83,6 +83,43 @@ fun SignUpScreen(
         )
     }
 
+    val colorsOutlinedTxtField = OutlinedTextFieldDefaults.colors(
+        // Borders
+        focusedBorderColor = MaterialTheme.colorScheme.primary,
+        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+        disabledBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f), // Example disabled color
+        errorBorderColor = MaterialTheme.colorScheme.error,
+
+        // Container (Background)
+        //containerColor = MaterialTheme.colorScheme.surface, // Or another surface color
+        //disabledContainerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.38f), // Example disabled color
+
+        // Text
+        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+        unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        disabledTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f), // Example disabled color
+        errorTextColor = MaterialTheme.colorScheme.onSurface, // Typically onSurface for error text color
+
+        // Label (from your previous example, kept for completeness)
+        focusedLabelColor = MaterialTheme.colorScheme.primary,
+        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        disabledLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f), // Example disabled color
+        errorLabelColor = MaterialTheme.colorScheme.error,
+
+
+        // Leading Icon
+        focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
+        unfocusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        disabledLeadingIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f), // Example disabled color
+        errorLeadingIconColor = MaterialTheme.colorScheme.error,
+
+        // Trailing Icon
+        focusedTrailingIconColor = MaterialTheme.colorScheme.primary,
+        unfocusedTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        disabledTrailingIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f), // Example disabled color
+        errorTrailingIconColor = MaterialTheme.colorScheme.error
+    )
+
     //for firebase indicator
     Column(
         modifier = Modifier
@@ -167,14 +204,7 @@ fun SignUpScreen(
                 .fillMaxWidth()
                 .wrapContentHeight()
             ,
-            colors = TextFieldDefaults.colors(
-                unfocusedBorderColor = androidx.compose.material3.MaterialTheme.colorScheme.outline,
-                //focusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedLabelColor = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant,
-                //focusedLabelColor = MaterialTheme.colorScheme.primary, // Label focus
-                cursorColor = androidx.compose.material3.MaterialTheme.colorScheme.primary,
-                textColor = androidx.compose.material3.MaterialTheme.colorScheme.onSurface // Texte saisi
-            ),
+            colors = colorsOutlinedTxtField,
         )
         if(!validations["userEmail"]!! && email.isNotBlank()){
             Text(
@@ -267,14 +297,8 @@ fun SignUpScreen(
                     isPasswordFocused = focuseState.isFocused
                 }
             ,
-            colors = TextFieldDefaults.colors(
-                unfocusedBorderColor = androidx.compose.material3.MaterialTheme.colorScheme.outline,
-                //focusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedLabelColor = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant, // Label non focus
-                //focusedLabelColor = MaterialTheme.colorScheme.primary, // Label focus
-                cursorColor = androidx.compose.material3.MaterialTheme.colorScheme.primary,
-                textColor = androidx.compose.material3.MaterialTheme.colorScheme.onSurface // Texte saisi
-            ),
+            colors = colorsOutlinedTxtField
+            ,
         )
         AnimatedPasswordRequirements(
             password = password,
@@ -352,14 +376,7 @@ fun SignUpScreen(
                     isPasswordFocused = focuseState.isFocused
                 }
             ,
-            colors = TextFieldDefaults.colors(
-                unfocusedBorderColor = androidx.compose.material3.MaterialTheme.colorScheme.outline,
-                //focusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedLabelColor = androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant, // Label non focus
-                //focusedLabelColor = MaterialTheme.colorScheme.primary, // Label focus
-                cursorColor = androidx.compose.material3.MaterialTheme.colorScheme.primary,
-                textColor = androidx.compose.material3.MaterialTheme.colorScheme.onSurface // Texte saisi
-            ),
+            colors = colorsOutlinedTxtField,
         )
         if ((validations["c_passwordEmpty"]!!) || (!validations["c_password"]!!)) {
             Text(
@@ -382,8 +399,8 @@ fun SignUpScreen(
                 }
             },
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = androidx.compose.material3.MaterialTheme.colorScheme.primary,
-                contentColor = androidx.compose.material3.MaterialTheme.colorScheme.onPrimary
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                containerColor = MaterialTheme.colorScheme.primary
             ),
             shape = RoundedCornerShape(8.dp),
             elevation = ButtonDefaults.elevatedButtonElevation(10.dp),

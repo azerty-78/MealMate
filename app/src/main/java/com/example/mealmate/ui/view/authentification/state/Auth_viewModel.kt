@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.mealmate.data.repository.UserRepository
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.example.mealmate.data.customModel.GoogleAuthUiHelper
-import com.example.mealmate.ConnectivityObserver
+import com.example.mealmate.util.ConnectivityObserver
 import com.example.mealmate.util.Listener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

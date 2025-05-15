@@ -15,7 +15,14 @@ import com.example.mealmate.ui.view.authentification.SignUpScreen
 import com.example.mealmate.ui.view.authentification.SingInScreen
 import com.example.mealmate.ui.view.authentification.state.Auth_event
 import com.example.mealmate.ui.view.authentification.state.Auth_viewModel
+import com.example.mealmate.ui.view.communityScreen.CommunityScreen
+import com.example.mealmate.ui.view.communityScreen.aiOption.chat.ChatWithAIScreen
 import com.example.mealmate.ui.view.dashboardScreen.DashboardScreen
+import com.example.mealmate.ui.view.homeScreen.HomeScreen
+import com.example.mealmate.ui.view.homeScreen.TopicDetailScreen
+import com.example.mealmate.ui.view.homeScreen.TopicListScreen
+import com.example.mealmate.ui.view.profileScreen.ProfileScreen
+import com.example.mealmate.ui.view.settingsScreen.SettingsScreen
 
 
 //authentification graph
@@ -90,6 +97,38 @@ fun NavGraphBuilder.authGraph(navController: NavController){
     }
 }
 
+//home graph
+fun NavGraphBuilder.homeGraph(navController: NavController){
+    navigation(
+        startDestination =Routes.Screen.HomeScreen.route,
+        route = Routes.HOME_GRAPHROUTE
+    ){
+        composable(Routes.Screen.HomeScreen.route){
+            val viewModel: Auth_viewModel = hiltViewModel()
+
+            LaunchedEffect(Unit) {
+                viewModel.getSignedUser()
+            }
+
+            HomeScreen(
+                navController = navController,
+                currentUser = viewModel.uiState.value.currentUser
+            )
+        }
+        composable(Routes.Screen.TopicList.route){
+            TopicListScreen(navController = navController)
+        }
+        composable(Routes.Screen.TopicDetail.route){navBackStackEntry ->
+            val topicId = navBackStackEntry.arguments?.getString("topicId")
+            TopicDetailScreen(
+                topicId = topicId,
+                navController = navController
+            )
+        }
+        //more...
+    }
+}
+
 //dashboard graph
 fun NavGraphBuilder.dashboardGraph(navController: NavController){
     navigation(
@@ -105,6 +144,85 @@ fun NavGraphBuilder.dashboardGraph(navController: NavController){
             DashboardScreen(
                 navController = navController,
                 currentUser = viewModel.uiState.value.currentUser,
+            )
+        }
+        //more...
+    }
+}
+
+//community graph
+fun NavGraphBuilder.communityGraph(navController: NavController){
+    navigation(
+        startDestination = Routes.Screen.CommunityScreen.route,
+        route = Routes.COMMUNITY_GRAPHROUTE
+    ){
+        composable(Routes.Screen.CommunityScreen.route){
+            val viewModel: Auth_viewModel = hiltViewModel()
+            LaunchedEffect(Unit) {
+                viewModel.getSignedUser()
+            }
+
+            CommunityScreen(
+                navController = navController,
+                currentUser = viewModel.uiState.value.currentUser
+            )
+        }
+        composable(
+            route = Routes.Screen.ChatWithAIScreen.route,
+            arguments = listOf()
+        ) {
+            ChatWithAIScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        //more...
+    }
+}
+
+//settings graph
+fun NavGraphBuilder.settingsGraph(navController: NavController){
+    navigation(
+        startDestination = Routes.Screen.SettingsScreen.route,
+        route = Routes.SETTINGS_GRAPHROUTE
+    ){
+        composable(Routes.Screen.SettingsScreen.route){
+            val viewModel: Auth_viewModel = hiltViewModel()
+            LaunchedEffect(Unit) {
+                viewModel.getSignedUser()
+            }
+
+            SettingsScreen(
+                navController = navController,
+                currentUser = viewModel.uiState.value.currentUser,
+                onLogout = {
+                    viewModel.onEvent(Auth_event.OnLogout)
+                    navController.navigate(Routes.AUTH_GRAPHROUTE) {
+                        popUpTo(0)
+                    }
+                }
+            )
+        }
+        //more...
+    }
+}
+
+//profile graph
+fun NavGraphBuilder.profileGraph(navController: NavController){
+    navigation(
+        startDestination = Routes.Screen.ProfileScreen.route,
+        route = Routes.PROFILE_GRAPHROUTE
+    ){
+        composable(Routes.Screen.ProfileScreen.route){
+            val viewModel: Auth_viewModel = hiltViewModel()
+            LaunchedEffect(Unit) {
+                viewModel.getSignedUser()
+            }
+
+            ProfileScreen(
+                navController = navController,
+                currentUser = viewModel.uiState.value.currentUser
             )
         }
         //more...

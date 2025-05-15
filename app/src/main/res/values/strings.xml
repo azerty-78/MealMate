@@ -9,4 +9,25 @@
 
     <!-- Client ID -->
     <string name="client_id">937139751235-di6p6dh5pb8dhgsteoa7v5soi9c02utl.apps.googleusercontent.com</string>
+
+    <!-- Chat sample strings -->
+    <string name="chat_label">Message</string>
+    <string name="action_send">Send</string>
+
+
+    <!-- Summarize sample strings -->
+    <string name="summarize_label">Text</string>
+    <string name="summarize_hint">Enter text to summarize</string>
+
+    <!-- Photo Reasoning sample strings -->
+    <string name="reason_label">Question</string>
+    <string name="reason_hint">Upload an image and then ask a question</string>
+    <string name="add_image">Add Image</string>
+
+    <!-- Top app bar strings -->
+    <string name="profile_picture_description">Photo de profil</string>
+    <string name="greeting_text">Salut !</string>
+    <string name="username_not_defined">Non défini</string>
+    <string name="search_icon_description">Icône de recherche</string>
+    <string name="notifications_icon_description">Icône de notifications</string>
 </resources>

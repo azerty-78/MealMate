@@ -82,6 +82,43 @@ fun SingInScreen(
         loadingText = "Authentification en cours..."
     )
 
+    val colorsOutlinedTxtField = OutlinedTextFieldDefaults.colors(
+        // Borders
+        focusedBorderColor = MaterialTheme.colorScheme.primary,
+        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+        disabledBorderColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f), // Example disabled color
+        errorBorderColor = MaterialTheme.colorScheme.error,
+
+        // Container (Background)
+        //containerColor = MaterialTheme.colorScheme.surface, // Or another surface color
+        //disabledContainerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.38f), // Example disabled color
+
+        // Text
+        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+        unfocusedTextColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        disabledTextColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f), // Example disabled color
+        errorTextColor = MaterialTheme.colorScheme.onSurface, // Typically onSurface for error text color
+
+        // Label (from your previous example, kept for completeness)
+        focusedLabelColor = MaterialTheme.colorScheme.primary,
+        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        disabledLabelColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f), // Example disabled color
+        errorLabelColor = MaterialTheme.colorScheme.error,
+
+
+        // Leading Icon
+        focusedLeadingIconColor = MaterialTheme.colorScheme.primary,
+        unfocusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        disabledLeadingIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f), // Example disabled color
+        errorLeadingIconColor = MaterialTheme.colorScheme.error,
+
+        // Trailing Icon
+        focusedTrailingIconColor = MaterialTheme.colorScheme.primary,
+        unfocusedTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+        disabledTrailingIconColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f), // Example disabled color
+        errorTrailingIconColor = MaterialTheme.colorScheme.error
+    )
+
 
     val empty by remember { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
@@ -173,14 +210,7 @@ fun SingInScreen(
                 .fillMaxWidth()
                 .wrapContentHeight()
             ,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                //focusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                //focusedLabelColor = MaterialTheme.colorScheme.primary, // Label focus
-                cursorColor = MaterialTheme.colorScheme.primary,
-                textColor = MaterialTheme.colorScheme.onSurface // Texte saisi
-            ),
+            colors = colorsOutlinedTxtField,
         )
         if(!validations["userEmail"]!! && email.isNotBlank()) {
             Text(
@@ -271,14 +301,7 @@ fun SingInScreen(
                     isPasswordFocused = focuseState.isFocused
                 }
             ,
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                //focusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant, // Label non focus
-                //focusedLabelColor = MaterialTheme.colorScheme.primary, // Label focus
-                cursorColor = MaterialTheme.colorScheme.primary,
-                textColor = MaterialTheme.colorScheme.onSurface // Texte saisi
-            ),
+            colors = colorsOutlinedTxtField,
         )
         // Message d'erreur global seulement après tentative de soumission
         if ((loginAttempted && !passwordValidation.isValid) || validations["passwordEmpty"]!!) {
@@ -320,8 +343,8 @@ fun SingInScreen(
 
             },
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                containerColor = MaterialTheme.colorScheme.primary
             ),
             shape = RoundedCornerShape(8.dp),
             elevation = ButtonDefaults.elevatedButtonElevation(10.dp),
@@ -372,9 +395,9 @@ fun SingInScreen(
                 }
             },
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colorScheme.surface,
-                contentColor = MaterialTheme.colorScheme.onSurface,
-                disabledBackgroundColor = MaterialTheme.colorScheme.onSurface.copy(
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                containerColor = MaterialTheme.colorScheme.primary,
+                disabledContainerColor = MaterialTheme.colorScheme.onSurface.copy(
                     alpha = 2f
                 )
             ),
