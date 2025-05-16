@@ -1,5 +1,6 @@
 package com.example.mealmate.ui.view.components.myBottomAppBar
 
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Badge
 import androidx.compose.material3.Icon
@@ -9,10 +10,14 @@ import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import kotlin.compareTo
+import kotlin.toString
 
 @Composable
 fun MyNavigationOnRail(
@@ -57,6 +62,7 @@ fun MyNavigationOnRail(
                                 else item.unselectedIcon
                             ),
                             contentDescription = item.title,
+                            modifier = Modifier.size(24.dp)
                         )
                     }
                 },

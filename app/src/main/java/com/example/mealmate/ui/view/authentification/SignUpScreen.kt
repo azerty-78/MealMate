@@ -399,8 +399,8 @@ fun SignUpScreen(
                 }
             },
             colors = ButtonDefaults.buttonColors(
-                contentColor = MaterialTheme.colorScheme.onPrimary,
-                containerColor = MaterialTheme.colorScheme.primary
+                contentColor = MaterialTheme.colorScheme.onBackground,
+                containerColor = MaterialTheme.colorScheme.background,
             ),
             shape = RoundedCornerShape(8.dp),
             elevation = ButtonDefaults.elevatedButtonElevation(10.dp),
@@ -433,8 +433,8 @@ fun SignUpScreen(
         Spacer(modifier = Modifier.weight(1f))
         Text(
             text = stringResource(R.string.society_info),
-            style = androidx.compose.material3.MaterialTheme.typography.labelSmall.copy(
-                color = androidx.compose.material3.MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+            style = MaterialTheme.typography.labelSmall.copy(
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
             ),
         )
         Spacer(modifier = Modifier.height(50.dp))
