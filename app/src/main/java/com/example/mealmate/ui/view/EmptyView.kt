@@ -5,5 +5,6 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun EmptyView(modifier: Modifier = Modifier) {
+    //nothing now
     
 }
