@@ -1,6 +1,7 @@
 package com.example.mealmate.presentation.navgraph
 
 import android.app.Activity.RESULT_OK
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -10,12 +11,14 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.mealmate.ui.view.UnsupportedFeatureScreen
 import com.example.mealmate.ui.view.authentification.ForgotPasswordScreen
 import com.example.mealmate.ui.view.authentification.SignUpScreen
 import com.example.mealmate.ui.view.authentification.SingInScreen
 import com.example.mealmate.ui.view.authentification.state.Auth_event
 import com.example.mealmate.ui.view.authentification.state.Auth_viewModel
 import com.example.mealmate.ui.view.communityScreen.CommunityScreen
+import com.example.mealmate.ui.view.communityScreen.aiOption.chat.ChatMessage
 import com.example.mealmate.ui.view.communityScreen.aiOption.chat.ChatWithAIScreen
 import com.example.mealmate.ui.view.dashboardScreen.DashboardScreen
 import com.example.mealmate.ui.view.homeScreen.HomeScreen
@@ -170,12 +173,17 @@ fun NavGraphBuilder.communityGraph(navController: NavController){
         composable(
             route = Routes.Screen.ChatWithAIScreen.route,
             arguments = listOf()
-        ) {
-            ChatWithAIScreen(
-                onBackClick = {
-                    navController.popBackStack()
-                }
-            )
+        ) {backStackEntry ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S_V2) {
+                ChatWithAIScreen(
+                    onBackClick = {
+                        backStackEntry.savedStateHandle.remove<ChatMessage>("lastMessage")
+                        navController.popBackStack()
+                    }
+                )
+            }else{
+                UnsupportedFeatureScreen()
+            }
         }
         //more...
     }

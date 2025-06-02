@@ -50,7 +50,6 @@ import com.example.mealmate.R
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
-@RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
 @Composable
 internal fun ChatWithAIScreen(
     chatViewModel: ChatViewModel = viewModel(factory = GenerativeViewModelFactory),
