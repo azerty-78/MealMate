@@ -35,31 +35,31 @@ fun SettingsScreen(
     val user = currentUser?: return
     val settingsItems = listOf(
         listOf(
-            RowContentItem("Mes informations", R.drawable.p_icn) {},
-            RowContentItem("Vérification", R.drawable.p_icn) {},
-            RowContentItem("Mode Premium", R.drawable.p_icn) {},
-            RowContentItem("Service client", R.drawable.p_icn) {}
+            RowContentItem(title = null, value = "Mes informations", icon = R.drawable.p_icn, onClick =  {  }),
+            RowContentItem(title = null, value = "Mes informations", icon = R.drawable.p_icn, onClick =  {  }),
+            RowContentItem(title = null, value = "Mes informations", icon = R.drawable.p_icn, onClick =  {  }),
+            RowContentItem(title = null, value = "Mes informations", icon = R.drawable.p_icn, onClick =  {  }),
         ),
 
         listOf(
-            RowContentItem("Thème", R.drawable.p_icn) {},
-            RowContentItem("Changer de mot de passe", R.drawable.p_icn) {},
-            RowContentItem("Notifications", R.drawable.p_icn) {},
-            RowContentItem("Langue", R.drawable.p_icn) {}
+            RowContentItem(title = null, value = "Mes informations", icon = R.drawable.p_icn, onClick =  {  }),
+            RowContentItem(title = null, value = "Mes informations", icon = R.drawable.p_icn, onClick =  {  }),
+            RowContentItem(title = null, value = "Mes informations", icon = R.drawable.p_icn, onClick =  {  }),
+            RowContentItem(title = null, value = "Mes informations", icon = R.drawable.p_icn, onClick =  {  }),
         ),
 
         listOf(
-            RowContentItem("Thème", R.drawable.p_icn) {},
-            RowContentItem("Changer de mot de passe", R.drawable.p_icn) {},
-            RowContentItem("Notifications", R.drawable.p_icn) {},
-            RowContentItem("Langue", R.drawable.p_icn) {}
+            RowContentItem(title = null, value = "Thème", icon = R.drawable.p_icn, onClick =  {  }),
+            RowContentItem(title = null, value = "Changer de mot de passe", icon = R.drawable.p_icn, onClick =  {  }),
+            RowContentItem(title = null, value = "Notifications", icon = R.drawable.p_icn, onClick =  {  }),
+            RowContentItem(title = null, value = "Langue", icon = R.drawable.p_icn, onClick =  {  }),
         ),
 
         listOf(
-            RowContentItem("Inviter un proche", R.drawable.p_icn) {},
-            RowContentItem("Politique de confidentialité", R.drawable.p_icn) {},
-            RowContentItem("Termes et conditions", R.drawable.p_icn) {},
-            RowContentItem("Déconnexion", R.drawable.p_icn, { onLogout() })
+            RowContentItem(title = null, value = "Inviter un proche", icon = R.drawable.p_icn, onClick =  {  }),
+            RowContentItem(title = null, value = "Politique de confidentialité", icon = R.drawable.p_icn, onClick =  {  }),
+            RowContentItem(title = null, value = "Termes et conditions", icon = R.drawable.p_icn, onClick =  {  }),
+            RowContentItem(title = null, value = "Déconnexion", icon = R.drawable.p_icn, onClick =  { onLogout() }),
         )
     )
 
