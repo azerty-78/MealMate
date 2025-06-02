@@ -38,7 +38,6 @@ class ChatViewModel(
         _uiState.asStateFlow()
 
 
-    @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     fun sendMessage(userMessage: String) {
         // Add a pending message
         _uiState.value.addMessage(
