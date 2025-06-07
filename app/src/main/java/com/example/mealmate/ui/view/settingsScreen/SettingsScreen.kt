@@ -22,7 +22,7 @@ import com.example.mealmate.data.source.model.User
 import com.example.mealmate.ui.view.components.myBottomAppBar.MyBottomAppBar
 import com.example.mealmate.ui.view.components.myBottomAppBar.MyNavigationOnRail
 import com.example.mealmate.ui.view.components.myTopAppBar.MyTopBar
-import com.example.mealmate.ui.view.settingsScreen.components.CardContent
+import com.example.mealmate.ui.view.settingsScreen.components.ContenairSettingsItems
 import com.example.mealmate.ui.view.components.rowIconText.RowContentItem
 
 @SuppressLint("UnusedBoxWithConstraintsScope")
@@ -84,7 +84,7 @@ fun SettingsScreen(
                     ) {
                         items(settingsItems.size) { index ->
                             val cardItems = settingsItems[index]
-                            CardContent(
+                            ContenairSettingsItems(
                                 listRowContent = cardItems,
                                 modifier = Modifier.fillMaxWidth()
                             )
@@ -107,32 +107,22 @@ fun SettingsScreen(
                     MyBottomAppBar(navController = navController)
                 }
             ) { paddingValues ->
-                BoxWithConstraints(modifier = Modifier.padding(paddingValues)) {
-                    val columnCount = when {
-                        maxWidth > 1200.dp -> 4// pc/web
-                        maxWidth > 600.dp -> 2//tablette
-                        else -> 1//smartphone
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(1),
+                    modifier = Modifier.fillMaxSize().padding(paddingValues),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    items(settingsItems.size) { index ->  // Utilisation de .size et index
+                        val cardItems = settingsItems[index]
+                        ContenairSettingsItems(
+                            listRowContent = cardItems,
+                            modifier = Modifier.fillMaxWidth()
+                        )
                     }
-
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(columnCount),
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        items(settingsItems.size) { index ->  // Utilisation de .size et index
-                            val cardItems = settingsItems[index]
-                            CardContent(
-                                listRowContent = cardItems,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-
-
                 }
+                Spacer(modifier = Modifier.height(16.dp))
             }
         }
     }

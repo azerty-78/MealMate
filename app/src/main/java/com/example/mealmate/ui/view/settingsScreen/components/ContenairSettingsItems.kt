@@ -21,7 +21,7 @@ import com.example.mealmate.ui.view.components.rowIconText.RowContentItem
 import com.example.mealmate.ui.view.components.rowIconText.myList1
 
 @Composable
-fun CardContent(
+fun ContenairSettingsItems(
     listRowContent: List<RowContentItem>,
     modifier: Modifier = Modifier,
     elevation: Dp = 4.dp,
@@ -32,9 +32,7 @@ fun CardContent(
             .fillMaxWidth()
             .padding(horizontal = 10.dp, vertical = 8.dp) // Ajout de padding pour les bords
         ,
-        colors = CardDefaults.cardColors(
-            contentColor = MaterialTheme.colorScheme.onSurface
-        ),
+        colors = CardDefaults.cardColors(contentColor = MaterialTheme.colorScheme.onSurface),
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = elevation)
     ) {
@@ -62,5 +60,5 @@ fun CardContent(
 @Preview
 @Composable
 private fun CardContentPrev() {
-    CardContent(myList1)
+    ContenairSettingsItems(myList1)
 }

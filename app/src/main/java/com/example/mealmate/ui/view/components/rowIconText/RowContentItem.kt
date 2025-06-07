@@ -16,8 +16,8 @@ data class RowContentItem(
     val value: String,
     @DrawableRes val icon: Int,
     val keyboardType: KeyboardType = KeyboardType.Text,
-    val onClick: (RowContentItem) -> Unit, // Modifier le type de onClick
-    val onLongClick: ((RowContentItem) -> Unit)? = null // Ajouter une option pour un long clic
+    val onClick: (RowContentItem) -> Unit,
+    val onLongClick: ((RowContentItem) -> Unit)? = null // option pour un long clic
 )
 
 
