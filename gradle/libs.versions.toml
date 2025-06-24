@@ -46,6 +46,7 @@ room = "2.6.1"
 guava = "33.3.1-jre"
 reactiveStreams = "1.0.4"
 generativeAi = "0.9.0"
+constraintlayout = "2.2.1"
 
 [libraries]
 # Android Core
@@ -115,6 +116,7 @@ google-ai-generativeai = { group = "com.google.ai.client.generativeai", name = "
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -48,6 +48,7 @@ fun NewsItemBtmSheet(
                 link?.let { url->
                     try {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        context.startActivity(intent)
                     }catch (e: Exception){
                         Toast.makeText(context, "Erreur lors de l'ouverture du lien", Toast.LENGTH_SHORT).show()
                     }

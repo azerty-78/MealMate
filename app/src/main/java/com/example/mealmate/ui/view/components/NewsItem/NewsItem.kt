@@ -1,6 +1,7 @@
 package com.example.mealmate.ui.view.components.NewsItem
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -63,7 +65,7 @@ fun NewsItem(
         ) {
             Box(modifier = Modifier
                 .weight(0.8f)
-                .clickable { newImageUrl?.let { link -> showFullScreenImage = link } }){
+                .clickable{ newImageUrl?.let { link -> showFullScreenImage = link } }){
                 AsyncImage(
                     model = newImageUrl,
                     contentDescription = null,
@@ -173,5 +175,4 @@ fun NewsImagePrevv(modifier: Modifier = Modifier) {
         newImageUrl = null,
         modifier = Modifier.height(300.dp)
     )
-
 }

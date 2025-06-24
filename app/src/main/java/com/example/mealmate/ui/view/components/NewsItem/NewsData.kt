@@ -1,9 +1,13 @@
 package com.example.mealmate.ui.view.components.NewsItem
 
+import java.security.Timestamp
+
 data class NewsData(
-    val title: String,
-    val authorName: String,
-    val link: String?,
-    val partnerImageUrl: String?,
-    val newImageUrl: String?
+    //val id: String = "",
+    val title: String = "",
+    val authorName: String = "",
+    val link: String? = null,
+    val partnerImageUrl: String? = null,
+    val newImageUrl: String? = null,
+    //val publicationDate: Timestamp? = null
 )
