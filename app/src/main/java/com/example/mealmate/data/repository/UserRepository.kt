@@ -1,6 +1,7 @@
 package com.example.mealmate.data.repository
 
 import android.content.Intent
+import android.net.Uri
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
@@ -17,11 +18,13 @@ import com.example.mealmate.data.source.model.SignInResult
 import com.example.mealmate.data.source.model.User
 import com.example.mealmate.util.ConnectivityObserver
 import com.example.mealmate.util.Listener
-import kotlinx.coroutines.flow.FlowCollector
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.tasks.await
+import java.util.UUID
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -59,7 +62,6 @@ class UserRepository
                 if(next.isCancelled) return@addOnFailureListener
                 next.resumeWithException(exception)
             }
-
         }
 
         //etat de succes
@@ -76,7 +78,6 @@ class UserRepository
             emit(Listener.Error(e = Exception("No internet connection"), message = "Aucune connexion internet"))
             return@flow
         }
-
         //emission sequentielle de l'état de chargement
         //etat de chargement
         emit(Listener.Loading)
@@ -178,6 +179,68 @@ class UserRepository
         } catch (e: Exception) {
             SignInResult(null, e.message)
         }
+    }
+
+    fun updateProfile(username: String?, photoUri: Uri?) = flow {
+        emit(Listener.Loading)
+
+        val firebaseStorage = FirebaseStorage.getInstance()
+        val currentUser = Firebase.auth.currentUser
+        if (currentUser == null) {
+            emit(
+                Listener.Error(
+                    e = Exception("User not logged in"),
+                    message = "Utilisateur non connecté"
+                )
+            )
+            return@flow
+        }
+
+        var photoUrlString: String? = currentUser.photoUrl?.toString()
+
+        // 1. Mettre à jour la photo de profil si une nouvelle URI est fournie
+        if (photoUri != null) {
+            // Créez une référence à 'profile_pictures/userId/imageName.jpg'
+            val photoRef = firebaseStorage.reference.child("profile_pictures/${currentUser.uid}/${UUID.randomUUID()}.jpg")
+            // Téléchargez le fichier
+            photoRef.putFile(photoUri).await()
+            // Obtenez l'URL de téléchargement
+            photoUrlString = photoRef.downloadUrl.await().toString()
+        }
+
+        // 2. Construire la requête de mise à jour du profil
+        val profileUpdates = UserProfileChangeRequest.Builder()
+        if (username != null) {
+            profileUpdates.displayName = username
+        }
+        if (photoUrlString != null) {
+            profileUpdates.photoUri = Uri.parse(photoUrlString)
+        }
+
+        // 3. Mettre à jour le profil utilisateur Firebase
+        currentUser.updateProfile(profileUpdates.build()).await()
+
+
+        // 4. Récupérer l'utilisateur mis à jour
+        val updatedUser = User(
+            id = currentUser.uid,
+            email = currentUser.email ?: "",
+            username = currentUser.displayName,
+            profilePictureUrl = currentUser.photoUrl?.toString()
+        )
+        emit(Listener.Success(updatedUser))
+    }.catch { excep->
+        emit(Listener.Error(
+            e = excep as Exception,
+            message = excep.message //"Erreur lors de la mise à jour du profil"
+        ))
+    }
+
+
+    // Fonction pour obtenir l'ID de l'utilisateur actuellement connecté
+    fun getCurrentUserId(): String? {
+        val firebaseAuth = Firebase.auth
+        return firebaseAuth.currentUser?.uid
     }
 }
 

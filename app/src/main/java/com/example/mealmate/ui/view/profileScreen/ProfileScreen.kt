@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,8 +26,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.mealmate.R
+import com.example.mealmate.data.source.model.MedicalParameters
 import com.example.mealmate.data.source.model.User
 import com.example.mealmate.ui.view.components.bottomSheet.RowIconBtmSheet
 import com.example.mealmate.ui.view.components.myBottomAppBar.MyBottomAppBar
@@ -34,6 +37,7 @@ import com.example.mealmate.ui.view.components.myBottomAppBar.MyNavigationOnRail
 import com.example.mealmate.ui.view.components.myTopAppBar.MyTopBar
 import com.example.mealmate.ui.view.components.rowIconText.RowContentItem
 import com.example.mealmate.ui.view.profileScreen.component.ContenairProfileItem
+import com.example.mealmate.ui.view.profileScreen.component.DatePickerBottomSheet
 import kotlin.toString
 
 @SuppressLint("UnusedBoxWithConstraintsScope")
@@ -41,8 +45,17 @@ import kotlin.toString
 fun ProfileScreen(
     navController: NavController,
     currentUser: User? = null,
+    viewModel: MedicalParametersViewModel = hiltViewModel()
 ) {
     val user = currentUser?: return
+    val medicalState by viewModel.uiState
+
+    // Observez les changements de paramètres médicaux
+    LaunchedEffect(Unit) {
+        viewModel.getMedicalParameters()
+    }
+
+    var showDatePicker by remember { mutableStateOf(false) }
 
     var isBottomSheetVisible by remember { mutableStateOf(false) }
     var bottomSheetItem by remember { mutableStateOf<RowContentItem?>(null) } // Pour stocker l'item cliqué
@@ -60,35 +73,48 @@ fun ProfileScreen(
             ),
             RowContentItem(
                 title = "Email", value = user.email.toString(), icon = R.drawable.person_filled_icn,
-                onClick = { }
-            ),
-            RowContentItem(
-                title = "Téléphone", value = user.password.toString(), icon = R.drawable.person_filled_icn,
-                onClick = onRowClick
-            ),
-            RowContentItem(
-                title = "Adresse", value = "Le monde", icon = R.drawable.person_filled_icn,
-                onClick = onRowClick
-            ),
+                onClick = { } // non modifiable
+            )
         ),
 
         listOf(
             RowContentItem(
-                title = "Paramètres", value = "Gérer les paramètres", icon = R.drawable.person_filled_icn,
-                onClick = { /* Naviguer vers les paramètres */ }
+                title = "Taille",
+                value = medicalState.currentParameters?.height?.toString() ?: "Entrez votre taille (m)",
+                icon = R.drawable.person_filled_icn,//height_icn,
+                keyboardType = KeyboardType.Decimal,
+                onClick = onRowClick
             ),
             RowContentItem(
-                title = "Notifications", value = "Voir les notifications", icon = R.drawable.person_filled_icn,
-                onClick = { /* Naviguer vers les notifications */ }
+                title = "Poids initial",
+                value = medicalState.currentParameters?.initialWeight?.toString() ?: "Entrez votre poids initial (Kg)",
+                icon = R.drawable.person_filled_icn,//weight_icn,
+                keyboardType = KeyboardType.Decimal,
+                onClick = onRowClick
             ),
             RowContentItem(
-                title = "À propos", value = "Informations sur l'application", icon = R.drawable.person_filled_icn,
-                onClick = { /* Afficher la page à propos */ }
+                title = "Poids actuel",
+                value = medicalState.currentParameters?.currentWeight?.toString() ?: "Entrez votre poids actuel (Kg)",
+                icon = R.drawable.person_filled_icn,//weight_icn,
+                keyboardType = KeyboardType.Decimal,
+                onClick = onRowClick
             ),
             RowContentItem(
-                title = "Déconnexion", value = "Se déconnecter", icon = R.drawable.person_filled_icn,
-                onClick = { /* Déconnecter l'utilisateur */ }
+                title = "Groupe sanguin",
+                value = medicalState.currentParameters?.bloodType ?: "Entrez votre groupe sanguin",
+                icon = R.drawable.person_filled_icn,//blood_icn,
+                onClick = onRowClick
             ),
+            RowContentItem(
+                title = "Date de naissance",
+                value = (medicalState.currentParameters?.birthDate ?: "jj/MM/aaaa").toString(),
+                icon = R.drawable.person_filled_icn,//calendar_icn,
+                onClick = { item ->
+                    bottomSheetItem = item
+                    // Ici vous pourriez ouvrir un DatePicker au lieu d'un champ texte
+                    isBottomSheetVisible = true
+                }
+            )
         ),
     )
 
@@ -174,13 +200,39 @@ fun ProfileScreen(
                 keyboardType = bottomSheetItem?.keyboardType ?: KeyboardType.Text,
                 onDismiss = { isBottomSheetVisible = false },
                 onConfirm = { newValue ->
-                    // Mettre à jour la valeur dans le ViewModel ou effectuer l'action nécessaire
-                    Log.d("Modifier ", "Nouvelle valeur pour ${bottomSheetItem?.title}: $newValue")
-                    // myViewModel.updateUserInformation(bottomSheetItem?.key, newValue)
+                    // Mettre à jour les paramètres médicaux
+                    val currentParams = medicalState.currentParameters ?: MedicalParameters(userId = user.id.toString())
+
+                    val updatedParams = when(bottomSheetItem?.title) {
+                        "Taille" -> currentParams.copy(height = newValue.toDoubleOrNull())
+                        "Poids initial" -> currentParams.copy(initialWeight = newValue.toDoubleOrNull())
+                        "Poids actuel" -> currentParams.copy(currentWeight = newValue.toDoubleOrNull())
+                        "Groupe sanguin" -> currentParams.copy(bloodType = newValue)
+                        "Date de naissance" -> currentParams.copy(birthDate = newValue)
+                        else -> currentParams
+                    }
+
+                    viewModel.createOrUpdateMedicalParameters(updatedParams)
                     isBottomSheetVisible = false
                     bottomSheetItem = null // Réinitialiser l'item sélectionné
                 },
-                onValueChange = { /*****************/ }
+                onValueChange = { valToUpdate ->
+                    bottomSheetItem = bottomSheetItem?.copy(value = valToUpdate)
+                }
+            )
+        }
+
+
+
+        // Plus bas dans votre UI :
+        if (showDatePicker) {
+            DatePickerBottomSheet(
+                isVisible = true,
+                onDismiss = { showDatePicker = false },
+                onDateSelected = { dateStr ->
+                    val currentParams = medicalState.currentParameters ?: MedicalParameters(userId = user.id.toString())
+                    viewModel.createOrUpdateMedicalParameters(currentParams.copy(birthDate = dateStr))
+                }
             )
         }
     }

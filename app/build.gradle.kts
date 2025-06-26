@@ -102,6 +102,8 @@ dependencies {
     // Dagger Hilt
     implementation(libs.dagger.hilt.android)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.storage.ktx)
+    implementation(libs.androidx.foundation.layout.android)
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 

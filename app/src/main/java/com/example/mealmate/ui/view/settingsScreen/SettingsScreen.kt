@@ -73,7 +73,7 @@ fun SettingsScreen(
                 value = "Gérer mon compte",
                 icon = R.drawable.person_filled_icn,
                 onClick = {
-                    navController.navigate("account_management")
+                    /*navController.navigate("account_management")*/
                 }
             )
         ),
@@ -85,7 +85,7 @@ fun SettingsScreen(
                 value = "Changer de mot de passe",
                 icon = R.drawable.lock_filled_icn,
                 onClick = {
-                    navController.navigate("change_password")
+                    /*navController.navigate("change_password")*/
                 }
             ),
             RowContentItem(
@@ -93,7 +93,7 @@ fun SettingsScreen(
                 value = "Authentification à deux facteurs",
                 icon = R.drawable.security_icn,
                 onClick = {
-                    navController.navigate("two_factor_auth")
+                    /*navController.navigate("two_factor_auth")*/
                 }
             ),
             RowContentItem(
@@ -101,7 +101,7 @@ fun SettingsScreen(
                 value = "Gérer les appareils connectés",
                 icon = R.drawable.device_outlined_icn,
                 onClick = {
-                    navController.navigate("active_sessions")
+                    /*navController.navigate("active_sessions")*/
                 }
             )
         ),

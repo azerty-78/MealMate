@@ -13,7 +13,7 @@ import com.example.mealmate.R
 
 data class RowContentItem(
     val title: String? = null,
-    val value: String,
+    var value: String,
     @DrawableRes val icon: Int,
     val keyboardType: KeyboardType = KeyboardType.Text,
     val onClick: (RowContentItem) -> Unit,

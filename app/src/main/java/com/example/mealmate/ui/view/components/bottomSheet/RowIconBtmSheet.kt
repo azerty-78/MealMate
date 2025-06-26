@@ -28,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -49,7 +50,7 @@ fun RowIconBtmSheet(
     onConfirm: (String) -> Unit,
     onValueChange: (String) -> Unit,
 ) {
-    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
     var internalValue by rememberSaveable { mutableStateOf(value ?: "") }
     val sheetState = rememberModalBottomSheetState( skipPartiallyExpanded = true )
 
@@ -110,7 +111,7 @@ fun RowIconBtmSheet(
                     value = internalValue,
                     onValueChange = {
                         internalValue = it
-                        onValueChange(it)
+                         onValueChange(it)
                     },
                     label = { Text(label) },
                     leadingIcon = {
@@ -147,7 +148,7 @@ fun RowIconBtmSheet(
                 OutlinedButton(
                     onClick = {
                         onConfirm(internalValue)
-                        //Toast.makeText(context, "Pas de connexion internet", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "Modification enregistree avec succes", Toast.LENGTH_SHORT).show()
                     },
                     colors = ButtonDefaults.buttonColors(
                         contentColor = MaterialTheme.colorScheme.onBackground,
@@ -161,20 +162,6 @@ fun RowIconBtmSheet(
                     modifier = Modifier.fillMaxWidth(),
                     border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.3f))
                 ){
-                    /*Row(verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = painterResource(R.drawable.google_icn),
-                            contentDescription = "Google logo",
-                            modifier = Modifier.size(24.dp),
-                        )
-                        Spacer(modifier = Modifier.width(20.dp))
-                        Text(
-                            text = "Continuer avec Google",
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                fontWeight = FontWeight.Bold
-                            )
-                        )
-                    }*/
                     Text(
                         text = "Modifier",
                         style = MaterialTheme.typography.titleMedium.copy(
